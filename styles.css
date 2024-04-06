@@ -30,7 +30,7 @@ h1 {
 
 h2 {
     font-size: 2em;
-    color:#0c3967;
+    color:rgb(95, 94, 94);
 }
 
 p {
@@ -56,13 +56,18 @@ article {
     padding: 20px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
     margin-bottom: 20px;
+    font-size: 20px;
+}
+
+article:hover {
+   box-shadow: 55px 55px 70px 5px rgba(44, 186, 170, 0.5);
 }
 
 strong {
     font-weight: 500;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 1125px) {
     main {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -74,7 +79,7 @@ strong {
     }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1300px) {
     main {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -86,8 +91,32 @@ strong {
    padding: 20px 60px 20px 10px;
    text-align: center;
    display: flex;
+   color: rgb(94, 92, 92);
 }
 
 nav {
    padding: 10px 2px 0px 30px;
 }
+
+.card-title {
+   color: rgb(117, 113, 113);
+}
+.card-title:hover {
+   color: rgb(54, 160, 160);
+}
+
+.descriptionTxt {
+   max-height: 90px;
+   overflow: hidden;
+ }
+
+.descriptionTxt.expanded {
+   max-height: none; 
+}
+
+.moreInfo {
+   color: rgb(117, 113, 113);
+   font-family: "Urbanist", sans-serif;
+   text-decoration: none;
+}
+ 
