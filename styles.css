@@ -1,0 +1,93 @@
+h1, h2, h3, p, ul, li {
+    margin:0;
+    padding:0;
+}
+
+/********** End Bill's Reset ***********/
+
+body {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 300;
+    color: #333;
+    background: hsla(238, 100%, 71%, 1);
+    background: linear-gradient(37deg, hsla(238, 100%, 71%, 1) 18%, hsla(162, 62%, 70%, 1) 88%);
+    background: -moz-linear-gradient(37deg, hsla(238, 100%, 71%, 1) 18%, hsla(162, 62%, 70%, 1) 88%);
+    background: -webkit-linear-gradient(37deg, hsla(238, 100%, 71%, 1) 18%, hsla(162, 62%, 70%, 1) 88%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#696eff", endColorstr="#85e2c6", GradientType=1 );
+    margin: 3%;
+}
+
+h1, h2, h3 {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    margin-bottom: .5em;
+}
+
+h1 {
+    position: absolute;
+    left: -10000px;
+}
+
+h2 {
+    font-size: 2em;
+    color:#0c3967;
+}
+
+p {
+    margin-bottom: 1em;
+    line-height: 1.4em;
+}
+
+header {
+    text-align: center;
+}
+
+header img {
+    max-width: 75%;
+}
+
+main {
+    padding: 20px;
+}
+
+article {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+strong {
+    font-weight: 500;
+}
+
+@media only screen and (min-width: 600px) {
+    main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+    }
+
+    article {
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    main {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 20px;
+    }
+}
+
+#form-section{
+   padding: 20px 60px 20px 10px;
+   text-align: center;
+   display: flex;
+}
+
+nav {
+   padding: 10px 2px 0px 30px;
+}
