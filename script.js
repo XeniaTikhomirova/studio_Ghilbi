@@ -47,8 +47,8 @@ function setSort(array){
          case "title": array.sort((a, b) => (a.title > b.title) ? 1 : -1); break;
          case "director": array.sort((a, b) => (a.director > b.director) ? 1 : -1); break;
          case "rt_score": array.sort((a, b) => (parseInt(b.rt_score) - parseInt(a.rt_score))); break;
-         case "release_date1": array.sort((a, b) => (parseInt(b.release_date) - parseInt(a.release_date))); break;
-         case "release_date2": array.sort((a, b) => (parseInt(a.release_date) - parseInt(b.release_date))); break;
+         case "release_date2": array.sort((a, b) => (parseInt(b.release_date) - parseInt(a.release_date))); break;
+         case "release_date1": array.sort((a, b) => (parseInt(a.release_date) - parseInt(b.release_date))); break;
       }
    }
 }
