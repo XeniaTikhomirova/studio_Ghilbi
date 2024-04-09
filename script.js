@@ -87,6 +87,7 @@ async function peopleCardContent(data){
    }
 
    const species = await individItem(data.species, "name");
+   //console.log(`${data.species}`);
    let html = `<h2>${data.name}</h2>`;
    html += `<p><strong>Details:</strong> gender ${data.gender}, age ${data.age}, eye color ${data.eye_color}, hair color ${data.hair_color}</p>`;
    html += `<p><strong>Films:</strong>  ${filmtitles.join(', ')}</p>`;
@@ -115,7 +116,7 @@ async function locationCardContent(data){
       filmtitles.push(filmTitle);
    }
    let html = `<h2>${data.name}</h2>`;
-   html += `<p><strong>Details:</strong> climate ${data.climate}, terrain ${data.terrain}, surface water  ${data.surface_water}%</p>`;
+   html += `<p><strong>Details:</strong> climate ${data.climate}, terrain ${data.terrain}, surface water ${data.surface_water}%</p>`;
    html += `<p><strong>Residents:</strong>  ${residentNames.join(', ')}</p>`;
    html += `<p><strong>Films:</strong>${filmtitles.join(', ')}</p>`;
    return html;
