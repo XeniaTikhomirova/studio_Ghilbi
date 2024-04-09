@@ -1,6 +1,8 @@
 const mainPart = document.querySelector("main");
 const navlinks = document.querySelectorAll('#mainnav ul li a');
 let filmData;
+
+// initial end points:
 let dataSet ="films";
 let url = 'https://ghibliapi.dev/films';
 
@@ -13,9 +15,11 @@ async function getData(url){
       addCards(data);
       filmData = data;
       document.getElementById("sortorder").removeAttribute("disabled");
+      document.querySelector("nav form").style.visibility = "visible";
    } else {
       mainPart.innerHTML= "";
       addCards(data);
+      document.querySelector("nav form").style.visibility = "hidden";
    }
 }
 getData(url);
@@ -50,13 +54,7 @@ function setSort(array){
 }
 
 function addCards(array){
-   if(Array.isArray(array)){
-      array.forEach(eachFilm => {
-         createCard(eachFilm);
-      });
-   } else {
-      console.log("Not array from addCards func!")
-   }
+   array.forEach(eachItem => createCard(eachItem));
 }
 
 async function createCard(data) {
@@ -65,6 +63,8 @@ async function createCard(data) {
             case "people": card.innerHTML = await peopleCardContent(data); break;
             case "films": card.innerHTML = filmCardContent(data); break;
             case "locations": card.innerHTML = await locationCardContent(data); break;
+            case "species": card.innerHTML = await speciesCardContent(data); break;
+            case "vehicles": card.innerHTML = await vehiclesCardContent(data); break;
          }
          mainPart.appendChild(card);
       }
@@ -76,21 +76,6 @@ function filmCardContent(data) {
    html += `<p>${data.description}</p>`;
    html += `<p><strong>Rotten Tomatoes:</strong> ${data.rt_score}</p>`;
    return html;
-}
-
-async function individItem(url, item){
-   let theItem;
-   try {
-      const itemPromise = await fetch(url);
-      const data = await itemPromise.json();
-      theItem = data[item];
-   }
-   catch(err) {
-      theItem = "no data available";
-   }
-   finally {
-      return theItem;
-   }
 }
 
 async function peopleCardContent(data){
@@ -134,4 +119,51 @@ async function locationCardContent(data){
    html += `<p><strong>Residents:</strong>  ${residentNames.join(', ')}</p>`;
    html += `<p><strong>Films:</strong>${filmtitles.join(', ')}</p>`;
    return html;
+}
+
+async function speciesCardContent(data) {
+   const people = data.people;
+   let peopleNames = [];
+   for (eachPerson of people) {
+      const personName = await individItem(eachPerson, 'name');
+      peopleNames.push(personName);
+   }
+   const thefilms = data.films;
+   let filmtitles = [];
+   for (eachFilm of thefilms) {
+      const filmTitle = await individItem(eachFilm, 'title');
+      filmtitles.push(filmTitle);
+   }
+   let html = `<h2>${data.name}</h2>`;
+   html += `<p><strong>Classification:</strong> ${data.classification}</p>`;
+   html += `<p><strong>Eye Colors:</strong> ${data.eye_colors}</p>`;
+   html += `<p><strong>Hair Colors:</strong> ${data.hair_colors}</p>`;
+   html += `<p><strong>People:</strong> ${peopleNames.join(', ')}</p>`;
+   html += `<p><strong>Films:</strong> ${filmtitles.join(', ')}</p>`;
+   return html;
+}
+
+async function vehiclesCardContent(data) {
+   let html = `<h2>${data.name}</h2>`;
+   html += `<p><strong>Description:</strong> ${data.description}</p>`;
+   html += `<p><strong>Vehicle class:</strong> ${data.vehicle_class}</p>`;
+   html += `<p><strong>Length: </strong> ${data.length}</p>`;
+   html += `<p><strong>Pilot: </strong>  ${await individItem(data.pilot, 'name')}</p>`;
+   html += `<p><strong>Film:</strong>  ${await individItem(data.films, 'title')}</p>`;
+   return html;
+}
+
+async function individItem(url, item){
+   let theItem;
+   try {
+      const itemPromise = await fetch(url);
+      const data = await itemPromise.json();
+      theItem = data[item];
+   }
+   catch(err) {
+      theItem = "no data available";
+   }
+   finally {
+      return theItem;
+   }
 }
