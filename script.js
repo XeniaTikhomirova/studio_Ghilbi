@@ -2,13 +2,12 @@ const mainPart = document.querySelector("main");
 const navlinks = document.querySelectorAll('#mainnav ul li a');
 let filmData;
 let dataSet ="films";
-let url = 'https://ghibliapi.herokuapp.com/films';
-
+let url = 'https://ghibliapi.dev/films';
 
 async function getData(url){
    const dataPromise = await fetch(url);
    const data = await dataPromise.json();
-   if(dataSet=="films"){
+   if(dataSet === "films"){
       mainPart.innerHTML= "";
       setSort(data);
       addCards(data);
@@ -28,10 +27,10 @@ document.getElementById("sortorder").addEventListener("change", function(){
 })
 
 navlinks.forEach(function(eachLink) {
-   eachLink.addEventListener("click", function(evt){
-      evt.preventDefault();
-      const thisLink = evt.target.getAttribute("href").substring(1);
-      url = "https://ghibliapi.herokuapp.com/" + thisLink;
+   eachLink.addEventListener("click", function(event){
+      event.preventDefault();
+      const thisLink = event.target.getAttribute('href').substring(1);
+      url = `https://ghibliapi.dev/${thisLink}`;
       dataSet = thisLink;
       getData(url);
    });
@@ -39,30 +38,36 @@ navlinks.forEach(function(eachLink) {
 
 function setSort(array){
    const valueSelection = document.getElementById("sortorder").value;
-   switch(valueSelection){
-      case "title": array.sort((a, b) => (a.title > b.title) ? 1 : -1); break;
-      case "director": array.sort((a, b) => (a.director > b.director) ? 1 : -1); break;
-      case "rt_score": array.sort((a, b) => (parseInt(b.rt_score) - parseInt(a.rt_score))); break;
-      case "release_date1": array.sort((a, b) => (parseInt(a.release_date) - parseInt(b.release_date))); break;
-      case "release_date2": array.sort((a, b) => (parseInt(b.release_date - a.release_date))); break;
+   if(Array.isArray(array)){
+      switch(valueSelection){
+         case "title": array.sort((a, b) => (a.title > b.title) ? 1 : -1); break;
+         case "director": array.sort((a, b) => (a.director > b.director) ? 1 : -1); break;
+         case "rt_score": array.sort((a, b) => (parseInt(b.rt_score) - parseInt(a.rt_score))); break;
+         case "release_date1": array.sort((a, b) => (parseInt(b.release_date) - parseInt(a.release_date))); break;
+         case "release_date2": array.sort((a, b) => (parseInt(a.release_date) - parseInt(b.release_date))); break;
+      }
    }
 }
 
 function addCards(array){
-   array.forEach(eachFilm => {
-      createCard(eachFilm);
-   });
+   if(Array.isArray(array)){
+      array.forEach(eachFilm => {
+         createCard(eachFilm);
+      });
+   } else {
+      console.log("Not array from addCards func!")
+   }
 }
 
 async function createCard(data) {
    const card = document.createElement("article");
-   switch(dataSet){
-      case "people": card.innerHTML = await peopleCardContent(data); break;
-      case "films": card.innerHTML = filmCardContent(data); break;
-      case "locations": card.innerHTML = await locationCardContent(data); break;
-   }
-   mainPart.appendChild(card);
-}
+      switch (dataSet){
+            case "people": card.innerHTML = await peopleCardContent(data); break;
+            case "films": card.innerHTML = filmCardContent(data); break;
+            case "locations": card.innerHTML = await locationCardContent(data); break;
+         }
+         mainPart.appendChild(card);
+      }
 
 function filmCardContent(data) {
    let html = `<h2>${data.title}</h2>`;
@@ -110,8 +115,8 @@ async function locationCardContent(data){
    let residentNames = [];
    for (eachResident of theResidents) {
       if(eachResident.match(regex)){
-      const resName = await indivItem(eachResident, 'name');
-      residentNames.push(resName);
+         const resName = await individItem(eachResident, 'name');
+         residentNames.push(resName);
       }
       else {
          residentNames[0]='no data available';
@@ -130,6 +135,3 @@ async function locationCardContent(data){
    html += `<p><strong>Films:</strong>${filmtitles.join(', ')}</p>`;
    return html;
 }
-
-
-
